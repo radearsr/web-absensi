@@ -27,7 +27,7 @@
                     <h1 class="title">Laporan Kegiatan Olahraga Harian Taruna Batalyon I</h1>
                 </div>
                 <div class="card-body">
-                    <form method="POST" name="absen-taruna">
+                    <form method="POST" name="absen-taruna"> 
 
                         <!-- Form Nama Lengkap -->
                         <div class="form-row">
@@ -81,7 +81,7 @@
                             </div>
                         </div>
                         <!-- Akhir Option Kelas -->
-
+                        
                         <!-- Form Link Video -->
                         <div class="form-row">
                             <div class="name">Link Video</div>
@@ -92,7 +92,6 @@
                             </div>
                         </div>
                         <!-- Akhir Form Link Video -->
-
                         <div>
                             <center>
                             <button name="submit" class="btn btn--radius-2 btn--blue" type="submit">Kirim</button>

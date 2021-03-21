@@ -1,3 +1,40 @@
+<?php
+     if (isset($_POST['upload'])) {
+	 
+	     $file_one_name =  $_FILES['ab_pagi']['name'];
+		 $file_one_type =  $_FILES['ab_pagi']['type'];
+         $file_one_size =  $_FILES['ab_pagi']['size'];
+		 $file_one_tem_Loc =  $_FILES['ab_pagi']['tmp_name'];
+		 $file_one_store = "foto/".$file_one_name;
+
+	     $file_two_name =  $_FILES['ab_siang']['name'];
+		 $file_two_type =  $_FILES['ab_siang']['type'];
+         $file_two_size =  $_FILES['ab_siang']['size'];
+		 $file_two_tem_Loc =  $_FILES['ab_siang']['tmp_name'];
+		 $file_two_store = "foto/".$file_two_name;
+
+	     $file_three_name =  $_FILES['ab_sore']['name'];
+		 $file_three_type =  $_FILES['ab_sore']['type'];
+         $file_three_size =  $_FILES['ab_sore']['size'];
+		 $file_three_tem_Loc =  $_FILES['ab_sore']['tmp_name'];
+		 $file_three_store = "foto/".$file_three_name;
+
+	     $file_four_name =  $_FILES['ft_badan']['name'];
+		 $file_four_type =  $_FILES['ft_badan']['type'];
+         $file_four_size =  $_FILES['ft_badan']['size'];
+		 $file_four_tem_Loc =  $_FILES['ft_badan']['tmp_name'];
+		 $file_four_store = "foto/".$file_four_name;
+	
+		 if (move_uploaded_file($file_one_tem_Loc, $file_one_store) && 
+                move_uploaded_file($file_four_tem_Loc, $file_four_store)
+            ){
+		     echo "File Berhasil DiUpload";
+		 }	
+   
+     } 			
+		 
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,8 +64,58 @@
                     <h1 class="title"> Absen Kelas Taruna Batalyon II</h1>
                 </div>
                 <div class="card-body">
-                    <form method="POST">
+                    <!-- FORM UPLOAD FOTO -->
+                    <form method="POST" enctype="multipart/form-data">
+                        <!-- Foto Absen -->
+                        <div class="form-row">
+                            <div class="name">Foto Absen Pagi</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    <input class="input--style-5" type="file" name="ab_pagi">
+                                </div>
+                            </div>
+                        </div>
 
+                        <div class="form-row">
+                            <div class="name">Foto Absen Siang</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    <input class="input--style-5" type="file" name="ab_siang">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="name">Foto Absen Sore</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    <input class="input--style-5" type="file" name="ab_sore">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Akhir Foto Absen -->  
+                        
+                        <!-- Foto Full Badan -->
+                        <div class="form-row">
+                            <div class="name">Foto Full Badan</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    <input class="input--style-5" type="file" name="ft_badan">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Foto Full Badan --> 
+                        <div>
+                            <center>
+                            <button name="upload" class="btn btn--radius-2 btn--blue" type="submit">Upload</button>
+                            </center>
+                        </div>
+                    </form>
+                    <!-- AKHIR FORM UPLOAD FOTO -->
+                    <br>
+                    <br> 
+                    <!-- FORM ABSEN KELAS -->
+                    <form method="POST" name="absensi">
                         <!-- Form Nama Lengkap -->
                         <div class="form-row">
                             <div class="name">Nama Lengkap</div>
@@ -83,35 +170,6 @@
                         </div>
                         <!-- Akhir Option Kelas -->
 
-                        <!-- Foto Absen -->
-                        <div class="form-row">
-                            <div class="name">Foto Absen Pagi</div>
-                            <div class="value">
-                                <div class="input-group">
-                                    <input class="input--style-5" type="file" name="ab_pagi">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="name">Foto Absen Siang</div>
-                            <div class="value">
-                                <div class="input-group">
-                                    <input class="input--style-5" type="file" name="ab_siang">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="name">Foto Absen Sore</div>
-                            <div class="value">
-                                <div class="input-group">
-                                    <input class="input--style-5" type="file" name="ab_sore">
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Akhir Foto Absen -->   
-
                         <!-- Form Berat Badan -->
                         <div class="form-row">
                             <div class="name">Berat Badan(KG)</div>
@@ -123,26 +181,23 @@
                         </div>
                         <!-- Form Berat Badan -->
 
-                        <!-- Foto Full Badan -->
-                        <div class="form-row">
-                            <div class="name">Foto Full Badan</div>
-                            <div class="value">
-                                <div class="input-group">
-                                    <input class="input--style-5" type="file" name="ab_sore">
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Foto Full Badan -->
+                        <!-- Form Hidden -->
+                        <input type="hidden" name="ab_pagi" value="<?= $file_one_name; ?>">
+                        <input type="hidden" name="ab_siang" value="<?= $file_two_name; ?>">
+                        <input type="hidden" name="ab_sore" value="<?= $file_three_name; ?>">
+                        <input type="hidden" name="ft_badan" value="<?= $file_four_name; ?>">
+                        <input type="hidden" name="batalyon" value="BATALYON II">
+                        <!-- Form Hidden-->
 
                         <!-- Keterangan Absen -->   
                         <div class="form-row">
                             <div class="name">Keterangan</div>
                             <div class="input-group">                                
-                                <select class="select--group" id="selectKet" onclick="KeteranganAbsen()" name="kelas" required="">
+                                <select class="select--group" id="selectKet" onclick="KeteranganAbsen()" name="keterangan" required="">
                                     <option disabled="disabled" selected="selected">PILIH</option>
-                                    <option value="Tepat">Absen Tepat Waktu</option>
-                                    <option value="Telat">Telat Absen</option>
-                                    <option value="Tidak">Tidak Absen</option>
+                                    <option value="Absen Tepat Waktu">Absen Tepat Waktu</option>
+                                    <option value="Telat Absen">Telat Absen</option>
+                                    <option value="Tidak Absen">Tidak Absen</option>
                                     <option value="lainnya">Lainnya</option>                                   
                                 </select>                                    
                             </div>
@@ -174,10 +229,11 @@
 
                         <div>
                             <center>
-                            <button class="btn btn--radius-2 btn--blue" type="submit">Kirim</button>
+                            <button name="submit" class="btn btn--radius-2 btn--blue" type="submit">Kirim</button>
                             </center>
                         </div>
                     </form>
+                    <!-- AKHIR FORM ABSEN KELAS-->
                     <br>
                     <div>
                         <center>
@@ -188,32 +244,8 @@
             </div>
         </div>
     </div>
+    <script src="proses_kelas.js"></script>
 </body>
 
 </html>
 <!-- end document-->
-
-<!--               <select class="form-control" value="">
-                <option value="">Pilih</option>
-                <option name="" id="">NA</option>
-                <option name="" id="">NB</option>
-                <option name="" id="">NC</option>
-                <option name="" id="">ND</option>
-                <option name="" id="">NE</option>
-                <option name="" id="">NF</option>
-                <option name="" id="">NG</option>
-                <option name="" id="">NH</option>
-                <option name="" id="">TA</option>
-                <option name="" id="">TB</option>
-                <option name="" id="">TC</option>
-                <option name="" id="">TD</option>
-                <option name="" id="">TE</option>
-                <option name="" id="">TF</option>
-                <option name="" id="">TG</option>
-                <option name="" id="">TH</option>
-                <option name="" id="">KA</option>
-                <option name="" id="">KB</option>
-                <option name="" id="">KC</option>
-                <option name="" id="">KD</option>
-                <option name="" id="">KE</option>
-              </select> -->

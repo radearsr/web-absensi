@@ -1,3 +1,6 @@
+<!-- Memangggil File functions.php -->
+<?php require '../functions.php'; ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,13 +13,10 @@
     <title>BATALYON II</title>
 
     <!-- Icons font CSS-->
-    <link href="../bootstrap/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
-
-    <!-- Vendor CSS-->
-    <link href="../bootstrap/vendor/select2/select2.min.css" rel="stylesheet" media="all">
+    <link href="../assets/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
 
     <!-- Main CSS-->
-    <link href="../bootstrap/css/main.css" rel="stylesheet" media="all">
+    <link href="../assets/css/main.css" rel="stylesheet" media="all">
 </head>
 
 <body>
@@ -27,8 +27,33 @@
                     <h1 class="title">Laporan Kegiatan Olahraga Harian Taruna Batalyon II</h1>
                 </div>
                 <div class="card-body">
-                    <form method="POST" name="absen-taruna">
-
+                    <!-- Upload File Dan Menampilkan Alert -->
+                    <?php if( isset($_POST['upload']) ) : ?>
+                        <?php $namaFile1 = $_FILES['video']['name']; ?>
+                        <?php $respon = upload_file($_FILES, 'laporan'); ?>  
+                        <div class="alert"><h4><?= $respon; ?></h4></div>
+                    <?php endif; ?>
+                    <!-- Form Upload Video -->
+                    <form action="" method="post" enctype="multipart/form-data">
+                        <!-- Input Upload Video -->
+                        <div class="form-row">
+                            <div class="name">Video</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    <input class="input--style-5" type="file" name="video" required="">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Akhir Input Upload Video -->
+                        <center>
+                            <button name="upload" class="btn btn--radius-2 btn--blue" type="submit">Upload</button>
+                        </center>                        
+                    </form>
+                    <!-- Akhir Form Upload Video -->
+                    <br>
+                    <br>
+                    <!-- Form Absen -->
+                    <form method="POST" name="laporan-or">
                         <!-- Form Nama Lengkap -->
                         <div class="form-row">
                             <div class="name">Nama Lengkap</div>
@@ -52,55 +77,32 @@
                         </div>
                         <!-- Akhir Form NIT -->
 
+                        <!-- Input Hidden -->
+                        <input type="hidden" name="batalyon" value="BATALYON II">
+                        <input type="hidden" name="video" value="<?= $namaFile1; ?>">
+                        <!-- Akhir Input Hidden -->
+
                         <!-- Option Kelas -->
+                        <?php $kelas = daftar_kelas('batalyon2'); ?>
                         <div class="form-row">
                             <div class="name">Kelas</div>
                             <div class="input-group">                              
                                 <select class="select--group" name="kelas" required="">
                                     <option disabled="disabled" selected="selected">PILIH</option>
-                                    <option name="" id="">NA</option>
-                                    <option name="" id="">NB</option>
-                                    <option name="" id="">NC</option>
-                                    <option name="" id="">ND</option>
-                                    <option name="" id="">NE</option>
-                                    <option name="" id="">NF</option>
-                                    <option name="" id="">NG</option>
-                                    <option name="" id="">NH</option>
-                                    <option name="" id="">TA</option>
-                                    <option name="" id="">TB</option>
-                                    <option name="" id="">TC</option>
-                                    <option name="" id="">TD</option>
-                                    <option name="" id="">TE</option>
-                                    <option name="" id="">TF</option>
-                                    <option name="" id="">TG</option>
-                                    <option name="" id="">TH</option>
-                                    <option name="" id="">KA</option>
-                                    <option name="" id="">KB</option>
-                                    <option name="" id="">KC</option>
-                                    <option name="" id="">KD</option>
-                                    <option name="" id="">KE</option>
+                                    <?php foreach($kelas as $kls) :?>
+                                    <option value="<?= $kls ?>"><?= $kls ?></option>
+                                    <?php endforeach;?>
                                 </select>
                             </div>
                         </div>
                         <!-- Akhir Option Kelas -->
-
-                        <!-- Form Link Video -->
-                        <div class="form-row">
-                            <div class="name">Link Video</div>
-                            <div class="value">
-                                <div class="input-group">
-                                    <input class="input--style-5" type="text" name="link_video" required="">
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Akhir Form Link Video -->
-
                         <div>
                             <center>
                             <button class="btn btn--radius-2 btn--blue" type="submit">Kirim</button>
                             </center>
                         </div>
                     </form>
+                    <!-- Akhir Form Absen -->
                     <br>
                     <div>
                         <center>
@@ -113,7 +115,7 @@
     </div>
 </body>
 <!-- JS Input Form Ke Spereadsheet -->
-<script src="proses.js"></script>
+<script src="../assets/custom_js/proses_laporan.js"></script>
 
 </html>
 <!-- end document-->

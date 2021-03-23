@@ -1,7 +1,15 @@
+<?php 
+require 'functions.php';
+// http://web-absen.epizy.com/all_files/foto/
+if(isset($_POST['absen']) || isset($_POST['laporan'])){
+  $link = redirect($_POST);
+  header($link);
+}
+?>
+
 <!DOCTYPE html>  
 <html>  
 <html lang="en">
-
 <head>
     <!-- Required meta tags-->
     <meta charset="UTF-8">
@@ -11,14 +19,14 @@
     <title>Main Menu</title>
 
     <!-- Main CSS-->
-    <link href="bootstrap/css/main.css" rel="stylesheet" media="all">
-    <script src="bootstrap/jquery.min.js"></script>  
-    <link rel="stylesheet" href="bootstrap/bootstrap.min.css" />  
-    <script src="bootstrap/bootstrap.min.js"></script>  
+    <link href="assets/css/main.css" rel="stylesheet" media="all">
+    <script src="assets/bootstrap/jquery/jquery.min.js"></script>  
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />  
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>  
 </head>
 
 <body>
-    <div class="page-wrapper bg-gra-01 p-t-45 p-b-50">
+    <div class="page-wrapper bg-gra-03 p-t-45 p-b-50">
         <div class="wrapper wrapper--w790">
             <div class="card card-5">
                 <div class="card-heading">
@@ -26,15 +34,15 @@
                 </div>
                 <div class="card-body">
                     <div>
-                        <center>
-                        <a type="button" name="view" data-toggle="modal" data-target="#absen" class="btn btn-orange btn-lg btn-block">ABSEN KELAS</a>
-                        </center>
+                      <center>
+                      <a type="button" name="view" data-toggle="modal" data-target="#absen" class="btn btn--green btn-lg btn-block">ABSEN KELAS</a>
+                      </center>
                     </div>
                     <br>
                     <br>
                     <div>
                         <center>
-                          <a type="button" name="view" data-toggle="modal" data-target="#laporan" class="btn btn-banana btn-lg btn-block">LAPORAN OLAHRAGA</a>
+                          <a type="button" name="view" data-toggle="modal" data-target="#laporan" class="btn btn--red btn-lg btn-block">LAPORAN OLAHRAGA</a>
                         </center>
                     </div>
                 </div>
@@ -60,7 +68,7 @@
 
    <!-- Bagian Body Pop up -->
    <div class="modal-body">
-      <form action="fungsi.php" method="post">
+      <form action="" method="post">
         <div class="form-group">
           <label for="pilihdt">Silahkan Pilih Dan Klik Lanjutkan</label>
             <select name="laporan_kelas" class="form-control" id="pilihdt">
@@ -73,7 +81,7 @@
         <br>
         <div class="form-group">
           <center>
-            <input type="submit" class="btn btn-primary" name="laporan" value="LANJUT">
+            <input type="submit" class="btn btn-orange" name="laporan" value="LANJUT">
           </center>        
         </div>
       </form>
@@ -97,7 +105,7 @@
 
    <!-- Bagian Body Pop up -->
    <div class="modal-body">
-     <form action="fungsi.php" method="post">
+     <form action="" method="post">
        <div class="form-group">
        <label for="pilih">Silahkan Pilih Dan Klik Lanjutkan</label>
           <select name="absen_kelas" class="form-control" id="pilih">
@@ -110,7 +118,7 @@
        <br>
        <div class="form-group">
          <center>
-            <input type="submit" class="btn btn-success" name="absen" value="LANJUT">
+            <input type="submit" class="btn btn-orange" name="absen" value="LANJUT">
          </center>        
        </div>
       </form>

@@ -1,39 +1,5 @@
-<?php
-     if (isset($_POST['upload'])) {
-	 
-	     $file_one_name =  $_FILES['ab_pagi']['name'];
-		 $file_one_type =  $_FILES['ab_pagi']['type'];
-         $file_one_size =  $_FILES['ab_pagi']['size'];
-		 $file_one_tem_Loc =  $_FILES['ab_pagi']['tmp_name'];
-		 $file_one_store = "foto/".$file_one_name;
-
-	     $file_two_name =  $_FILES['ab_siang']['name'];
-		 $file_two_type =  $_FILES['ab_siang']['type'];
-         $file_two_size =  $_FILES['ab_siang']['size'];
-		 $file_two_tem_Loc =  $_FILES['ab_siang']['tmp_name'];
-		 $file_two_store = "foto/".$file_two_name;
-
-	     $file_three_name =  $_FILES['ab_sore']['name'];
-		 $file_three_type =  $_FILES['ab_sore']['type'];
-         $file_three_size =  $_FILES['ab_sore']['size'];
-		 $file_three_tem_Loc =  $_FILES['ab_sore']['tmp_name'];
-		 $file_three_store = "foto/".$file_three_name;
-
-	     $file_four_name =  $_FILES['ft_badan']['name'];
-		 $file_four_type =  $_FILES['ft_badan']['type'];
-         $file_four_size =  $_FILES['ft_badan']['size'];
-		 $file_four_tem_Loc =  $_FILES['ft_badan']['tmp_name'];
-		 $file_four_store = "foto/".$file_four_name;
-	
-		 if (move_uploaded_file($file_one_tem_Loc, $file_one_store) && 
-                move_uploaded_file($file_four_tem_Loc, $file_four_store)
-            ){
-		     echo "File Berhasil DiUpload";
-		 }	
-   
-     } 			
-		 
-?>
+<!-- Memanggil File functions.php -->
+<?php require '../functions.php'; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -47,13 +13,13 @@
     <title>BATALYON II</title>
 
     <!-- Icons font CSS-->
-    <link href="../bootstrap/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+    <link href="../assets/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
 
     <!-- Vendor CSS-->
-    <link href="../bootstrap/vendor/select2/select2.min.css" rel="stylesheet" media="all">
+    <link href="../assets/vendor/select2/select2.min.css" rel="stylesheet" media="all">
 
     <!-- Main CSS-->
-    <link href="../bootstrap/css/main.css" rel="stylesheet" media="all">
+    <link href="../assets/css/main.css" rel="stylesheet" media="all">
 </head>
 
 <body>
@@ -64,6 +30,14 @@
                     <h1 class="title"> Absen Kelas Taruna Batalyon II</h1>
                 </div>
                 <div class="card-body">
+                    <?php if( isset($_POST['upload']) ) : ?>
+                        <?php $namaFile1 = $_FILES['ab_pagi']['name'] ?>
+                        <?php $namaFile2 = $_FILES['ab_siang']['name'] ?>
+                        <?php $namaFile3 = $_FILES['ab_sore']['name'] ?>
+                        <?php $namaFile4 = $_FILES['ft_badan']['name'] ?>
+                        <?php $respon = upload_file($_FILES, 'kelas'); ?>  
+                        <div class="alert"><h4><?= $respon; ?></h4></div>
+                    <?php endif; ?>
                     <!-- FORM UPLOAD FOTO -->
                     <form method="POST" enctype="multipart/form-data">
                         <!-- Foto Absen -->
@@ -139,32 +113,15 @@
                         <!-- Akhir Form NIT -->
 
                         <!-- Option Kelas -->
+                        <?php $kelas = daftar_kelas('batalyon2'); ?>
                         <div class="form-row">
                             <div class="name">Kelas</div>
                             <div class="input-group">                              
                                 <select class="select--group" name="kelas" required="">
                                     <option disabled="disabled" selected="selected">PILIH</option>
-                                    <option name="" id="">NA</option>
-                                    <option name="" id="">NB</option>
-                                    <option name="" id="">NC</option>
-                                    <option name="" id="">ND</option>
-                                    <option name="" id="">NE</option>
-                                    <option name="" id="">NF</option>
-                                    <option name="" id="">NG</option>
-                                    <option name="" id="">NH</option>
-                                    <option name="" id="">TA</option>
-                                    <option name="" id="">TB</option>
-                                    <option name="" id="">TC</option>
-                                    <option name="" id="">TD</option>
-                                    <option name="" id="">TE</option>
-                                    <option name="" id="">TF</option>
-                                    <option name="" id="">TG</option>
-                                    <option name="" id="">TH</option>
-                                    <option name="" id="">KA</option>
-                                    <option name="" id="">KB</option>
-                                    <option name="" id="">KC</option>
-                                    <option name="" id="">KD</option>
-                                    <option name="" id="">KE</option>
+                                    <?php foreach($kelas as $kls) :?>
+                                    <option value="<?= $kls ?>"><?= $kls ?></option>
+                                    <?php endforeach;?>
                                 </select>                                   
                             </div>
                         </div>
@@ -182,10 +139,10 @@
                         <!-- Form Berat Badan -->
 
                         <!-- Form Hidden -->
-                        <input type="hidden" name="ab_pagi" value="<?= $file_one_name; ?>">
-                        <input type="hidden" name="ab_siang" value="<?= $file_two_name; ?>">
-                        <input type="hidden" name="ab_sore" value="<?= $file_three_name; ?>">
-                        <input type="hidden" name="ft_badan" value="<?= $file_four_name; ?>">
+                        <input type="hidden" name="ab_pagi" value="<?= $namaFile1; ?>">
+                        <input type="hidden" name="ab_siang" value="<?= $namaFile2; ?>">
+                        <input type="hidden" name="ab_sore" value="<?= $namaFile3; ?>">
+                        <input type="hidden" name="ft_badan" value="<?= $namaFile4; ?>">
                         <input type="hidden" name="batalyon" value="BATALYON II">
                         <!-- Form Hidden-->
 
@@ -244,7 +201,7 @@
             </div>
         </div>
     </div>
-    <script src="proses_kelas.js"></script>
+    <script src="../assets/custom_js/proses_kelas.js"></script>
 </body>
 
 </html>

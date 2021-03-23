@@ -3,6 +3,9 @@ const form = document.forms["absensi"];
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   fetch(scriptURL, { method: "POST", body: new FormData(form) })
-    .then((response) => alert("Berhasil Absen!"))
+    .then((response) => {
+      alert("Berhasil Absen!");
+      form.reset();
+    })
     .catch((error) => alert("Error!", error.message));
 });
